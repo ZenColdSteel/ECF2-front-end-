@@ -325,8 +325,7 @@ async function handleVehiculeSubmit(event) {
         const response = await fetch(`${API_URL}/car`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
-            },
+                'Content-Type': 'application/json'},
             body: JSON.stringify(vehiculeData)
         });
         
@@ -349,7 +348,9 @@ async function deleteVehicule(vehiculeId) {
     
     try {
         const response = await fetch(`${API_URL}/car/${vehiculeId}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'}
         });
         
         if (!response.ok) throw new Error('Erreur lors de la suppression du véhicule');
@@ -470,9 +471,7 @@ async function handleAssignationSubmit(event) {
     try {
         const response = await fetch(`${API_URL}/assignation`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: getAuthHeaders(),
             body: JSON.stringify(assignationData)
         });
         
@@ -512,14 +511,17 @@ async function updateVehiculeStatus(vehiculeId, statut) {
     try {
         const response = await fetch(`${API_URL}/car/${vehiculeId}`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: getAuthHeaders(),
+         
             body: JSON.stringify({
                 ...vehicule,
                 statut: statut
             })
         });
+        if (response.status === 401) {
+            // Token invalide ou expiré
+            throw { status: 401, message: 'Session expirée' };
+        }
         
         if (!response.ok) throw new Error('Erreur lors de la mise à jour du statut du véhicule');
     } catch (error) {
@@ -537,9 +539,7 @@ async function updateChauffeurDisponibilite(chauffeurId, disponibilite) {
     try {
         const response = await fetch(`${API_URL}/driver/${chauffeurId}`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: getAuthHeaders(),
             body: JSON.stringify({
                 ...chauffeur,
                 disponibilite: disponibilite
@@ -561,7 +561,8 @@ async function deleteAssignation(assignationId) {
         const assignation = assignationsCache.find(a => a.assignation_id === assignationId);
         
         const response = await fetch(`${API_URL}/assignation/${assignationId}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: getAuthHeaders()
         });
         
         if (!response.ok) throw new Error('Erreur lors de la suppression de l\'assignation');
