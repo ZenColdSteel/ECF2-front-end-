@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Flotte</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>VTC APP ADMIN</h1>
+    
+    <div class="container">
+        <!-- Section Chauffeurs -->
+        <div class="column">
+            <h2>Gestion des Chauffeurs</h2>
+            <form id="chauffeur-form">
+                <input type="text" id="chauffeur-nom" placeholder="Nom du chauffeur" required>
+                <input type="text" id="chauffeur-permis" placeholder="Numéro de permis" required>
+                <select id="chauffeur-disponibilite" required>
+                    <option value="true">Disponible</option>
+                    <option value="false">Non disponible</option>
+                </select>
+                <button type="submit">Ajouter Chauffeur</button>
+            </form>
+            
+            <h3>Liste des Chauffeurs</h3>
+            <table id="chauffeurs-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Permis</th>
+                        <th>Disponibilité</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Les chauffeurs seront ajoutés ici -->
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Section Véhicules -->
+        <div class="column">
+            <h2>Gestion des Véhicules</h2>
+            <form id="vehicule-form">
+                <input type="text" id="vehicule-modele" placeholder="Modèle" required>
+                <input type="text" id="vehicule-immatriculation" placeholder="Immatriculation" required>
+                <select id="vehicule-statut" required>
+                    <option value="Disponible">Disponible</option>
+                    <option value="En maintenance">En maintenance</option>
+                    <option value="En service">En service</option>
+                </select>
+                <button type="submit">Ajouter Véhicule</button>
+            </form>
+            
+            <h3>Liste des Véhicules</h3>
+            <table id="vehicules-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Modèle</th>
+                        <th>Immatriculation</th>
+                        <th>Statut</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Les véhicules seront ajoutés ici -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Section Assignations -->
+    <div class="column" style="margin-top: 20px;">
+        <h2>Assignation Chauffeur-Véhicule</h2>
+        <form id="assignation-form">
+            <select id="chauffeur-select" required>
+                <option value="">Sélectionner un chauffeur</option>
+                <!-- Les chauffeurs seront ajoutés ici -->
+            </select>
+            <select id="vehicule-select" required>
+                <option value="">Sélectionner un véhicule</option>
+                <!-- Les véhicules seront ajoutés ici -->
+            </select>
+            <input type="datetime-local" id="assignation-date" required>
+            <button type="submit">Assigner</button>
+        </form>
+        
+        <h3>Assignations Actuelles</h3>
+        <table id="assignations-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Chauffeur</th>
+                    <th>Véhicule</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Les assignations seront ajoutées ici -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
