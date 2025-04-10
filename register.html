@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - Gestion de Flotte</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <div class="register-container">
+        <h1>Inscription</h1>
+        
+        <div id="error-message" class="error-message" style="display: none;"></div>
+        
+        <form id="register-form">
+            <div class="form-group">
+                <label for="nom">Nom:</label>
+                <input type="text" id="nom" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Mot de passe:</label>
+                <input type="password" id="password" required>
+            </div>
+            
+            <button type="submit">S'inscrire</button>
+        </form>
+        
+        <p>
+            Déjà un compte? <a href="login.html">Se connecter</a>
+        </p>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>

@@ -5,14 +5,108 @@ const API_URL = 'http://localhost:3000/api'; // Ajustez selon votre configuratio
 let chauffeursCache = [];
 let vehiculesCache = [];
 let assignationsCache = [];
+function checkAuth() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'login.html';
+        return false;
+    }
+    return true;
+}
 
+// Fonction pour inclure le token dans les requêtes
+function getAuthHeaders() {
+    const token = localStorage.getItem('token');
+    return {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+    };
+}
+// Ajout du nom d'utilisateur dans le header et du bouton de déconnexion
+function setupUserInterface() {
+    // Ajouter un div pour afficher le nom de l'utilisateur et un bouton de déconnexion
+    const userInfo = document.createElement('div');
+    userInfo.classList.add('user-info');
+    
+    try {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user.nom) {
+            const userName = document.createElement('span');
+            userName.textContent = `Connecté en tant que: ${user.nom}`;
+            userInfo.appendChild(userName);
+        }
+    } catch (e) {
+        console.error('Erreur lors de la récupération des informations utilisateur', e);
+    }
+    
+    const logoutBtn = document.createElement('button');
+    logoutBtn.textContent = 'Déconnexion';
+    logoutBtn.classList.add('logout-btn');
+    logoutBtn.addEventListener('click', logout);
+    userInfo.appendChild(logoutBtn);
+    
+    // Ajouter au début du body
+    document.body.insertBefore(userInfo, document.body.firstChild);
+    
+    // Ajouter le style pour le div user-info
+    const style = document.createElement('style');
+    style.textContent = `
+        .user-info {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .user-info span {
+            margin-right: 20px;
+            font-weight: bold;
+        }
+        
+        .logout-btn {
+            padding: 8px 16px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
+    `;
+    document.head.appendChild(style);
+}
+// Fonction de déconnexion
+function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = 'login.html';
+}
+// Fonctions d'initialisation
 // Fonctions d'initialisation
 document.addEventListener('DOMContentLoaded', () => {
+    // Vérifier l'authentification
+    if (!checkAuth()) return;
+    
+    // Configurer l'interface utilisateur
+    setupUserInterface();
+    
     // Charger les données initiales en séquence
     fetchChauffeurs()
         .then(() => fetchVehicules())
         .then(() => fetchAssignations())
-        .catch(error => console.error('Erreur lors du chargement des données:', error));
+        .catch(error => {
+            console.error('Erreur lors du chargement des données:', error);
+            // Si erreur 401, rediriger vers la page de connexion
+            if (error.status === 401) {
+                alert('Session expirée. Veuillez vous reconnecter.');
+                logout();
+            }
+        });
     
     // Définir la date par défaut à maintenant pour le formulaire d'assignation
     const now = new Date();
@@ -25,12 +119,21 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('assignation-form').addEventListener('submit', handleAssignationSubmit);
 });
 
+
 // ===== GESTION DES CHAUFFEURS =====
 
 // Récupérer tous les chauffeurs
 async function fetchChauffeurs() {
     try {
-        const response = await fetch(`${API_URL}/driver`);
+        const response = await fetch(`${API_URL}/driver`, {
+            headers: getAuthHeaders()
+        });
+        
+        if (response.status === 401) {
+            // Token invalide ou expiré
+            throw { status: 401, message: 'Session expirée' };
+        }
+        
         if (!response.ok) throw new Error('Erreur lors de la récupération des chauffeurs');
         
         const result = await response.json();
@@ -41,7 +144,12 @@ async function fetchChauffeurs() {
         populateChauffeurSelect();
     } catch (error) {
         console.error('Erreur:', error);
-        alert('Impossible de charger les chauffeurs');
+        if (error.status === 401) {
+            alert('Session expirée. Veuillez vous reconnecter.');
+            logout();
+        } else {
+            alert('Impossible de charger les chauffeurs');
+        }
     }
 }
 
@@ -62,11 +170,13 @@ async function handleChauffeurSubmit(event) {
     try {
         const response = await fetch(`${API_URL}/driver`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: getAuthHeaders(),
             body: JSON.stringify(chauffeurData)
         });
+        if (response.status === 401) {
+            // Token invalide ou expiré
+            throw { status: 401, message: 'Session expirée' };
+        }
         
         if (!response.ok) throw new Error('Erreur lors de l\'ajout du chauffeur');
         
@@ -75,11 +185,17 @@ async function handleChauffeurSubmit(event) {
         permisInput.value = '';
         disponibiliteSelect.value = 'true';
         fetchChauffeurs();
-    } catch (error) {
+    }  catch (error) {
         console.error('Erreur:', error);
-        alert('Impossible d\'ajouter le chauffeur');
+        if (error.status === 401) {
+            alert('Session expirée. Veuillez vous reconnecter.');
+            logout();
+        } else {
+            alert('Impossible d\'ajouter le chauffeur');
+        }
     }
 }
+
 
 // Supprimer un chauffeur
 async function deleteChauffeur(chauffeurId) {
@@ -87,9 +203,13 @@ async function deleteChauffeur(chauffeurId) {
     
     try {
         const response = await fetch(`${API_URL}/driver/${chauffeurId}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: getAuthHeaders()
         });
-        
+        if (response.status === 401) {
+            // Token invalide ou expiré
+            throw { status: 401, message: 'Session expirée' };
+        }
         if (!response.ok) throw new Error('Erreur lors de la suppression du chauffeur');
         
         fetchChauffeurs();
@@ -530,3 +650,4 @@ function renderAssignationsTable() {
 window.deleteChauffeur = deleteChauffeur;
 window.deleteVehicule = deleteVehicule;
 window.deleteAssignation = deleteAssignation;
+window.logout = logout;
