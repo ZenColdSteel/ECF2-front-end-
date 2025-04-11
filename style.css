@@ -1,120 +1,120 @@
 /* Styles généraux */
 body {
-    font-family: 'Poppins', sans-serif; /* Police moderne et lisible */
-    max-width: 1200px; /* Largeur maximale de la page */
-    margin: 0 auto; /* Centre le contenu */
+    font-family: 'Poppins', sans-serif; 
+    max-width: 1200px; 
+    margin: 0 auto; 
     padding: 20px;
-    background-color: #121212; /* Fond sombre pour le mode dark */
-    color: #e0e0e0; /* Texte clair pour un bon contraste */
+    background-color: #121212; 
+    color: #e0e0e0;
 }
 
 /* Conteneur principal */
 .container {
-    display: flex; /* Active le modèle flexbox */
-    gap: 20px; /* Espacement entre les colonnes */
-    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne si besoin */
-    justify-content: center; /* Centre les éléments horizontalement */
+    display: flex; 
+    gap: 20px; 
+    flex-wrap: wrap; 
+    justify-content: center; 
 }
 
 /* Cartes / Sections */
 .column {
-    flex: 1; /* Permet aux colonnes de s'adapter à l'espace disponible */
-    min-width: 300px; /* Largeur minimale pour une bonne lisibilité */
-    padding: 20px; /* Espacement intérieur */
-    background: #1e1e1e; /* Fond légèrement plus clair que le body */
-    border-radius: 10px; /* Coins arrondis */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Ombre pour effet de profondeur */
-    transition: transform 0.3s ease-in-out; /* Animation fluide au survol */
+    flex: 1; 
+    min-width: 300px; 
+    padding: 20px; 
+    background: #1e1e1e; 
+    border-radius: 10px; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); 
+    transition: transform 0.3s ease-in-out; 
 }
 
 .column:hover {
-    transform: translateY(-5px); /* Légère élévation au survol */
+    transform: translateY(-5px); 
 }
 
 /* Titres */
 h2 {
-    color: #ffffff; /* Texte blanc */
-    border-bottom: 2px solid #8A2BE2; /* Ligne décorative en violet */
-    padding-bottom: 10px; /* Espacement en bas */
-    font-weight: 600; /* Épaisseur du texte */
+    color: #ffffff; 
+    border-bottom: 2px solid #8A2BE2;
+    padding-bottom: 10px;
+    font-weight: 600; 
 }
 
 /* Formulaires et entrées */
 form {
     display: flex;
-    flex-direction: column; /* Aligne les champs en colonne */
-    gap: 15px; /* Espacement entre les champs */
-    margin-bottom: 20px; /* Espacement sous le formulaire */
+    flex-direction: column; 
+    gap: 15px; 
+    margin-bottom: 20px; 
 }
 
 input, select, button {
-    padding: 12px; /* Espacement intérieur */
-    border-radius: 6px; /* Coins arrondis */
-    border: 1px solid #444; /* Bordure discrète */
-    font-size: 16px; /* Taille du texte */
-    background: #222; /* Fond légèrement plus clair */
-    color: #e0e0e0; /* Texte clair */
+    padding: 12px; 
+    border-radius: 6px; 
+    border: 1px solid #444;
+    font-size: 16px; 
+    background: #222; 
+    color: #e0e0e0; 
 }
 
 input:focus, select:focus {
     outline: none;
-    border-color: #8A2BE2; /* Couleur de focus en violet */
-    box-shadow: 0 0 5px rgba(138, 43, 226, 0.5); /* Effet lumineux subtil */
+    border-color: #8A2BE2; 
+    box-shadow: 0 0 5px rgba(138, 43, 226, 0.5); 
 }
 
 /* Boutons */
 button {
-    background: #8A2BE2; /* Fond violet */
-    color: white; /* Texte blanc */
-    border: none; /* Supprime la bordure par défaut */
-    font-weight: bold; /* Texte en gras */
-    cursor: pointer; /* Change le curseur pour indiquer une action */
-    transition: background 0.3s; /* Animation fluide du fond */
+    background: #8A2BE2; 
+    color: white;
+    border: none; 
+    font-weight: bold; 
+    cursor: pointer; 
+    transition: background 0.3s; 
 }
 
 button:hover {
-    background: #6a1bbd; /* Assombrit légèrement au survol */
+    background: #6a1bbd; 
 }
 
 /* Tableaux */
 table {
-    width: 100%; /* Prend toute la largeur disponible */
-    border-collapse: collapse; /* Supprime les espaces entre les bordures */
-    border-radius: 10px; /* Coins arrondis */
-    overflow: hidden; /* Empêche le dépassement des coins arrondis */
-    background: #1e1e1e; /* Fond assorti aux colonnes */
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* Ombre subtile */
+    width: 100%;
+    border-collapse: collapse; 
+    border-radius: 10px; 
+    overflow: hidden; 
+    background: #1e1e1e; 
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); 
 }
 
 table, th, td {
-    border: 1px solid #333; /* Bordures sombres */
+    border: 1px solid #333; 
 }
 
 th, td {
-    padding: 12px; /* Espacement intérieur */
-    text-align: left; /* Alignement du texte */
-    color: #e0e0e0; /* Texte clair */
+    padding: 12px; 
+    text-align: left; 
+    color: #e0e0e0; 
 }
 
 th {
-    background: #8A2BE2; /* Fond violet pour les en-têtes */
-    color: white; /* Texte blanc */
-    font-weight: 600; /* Texte en gras */
+    background: #8A2BE2;
+    color: white;
+    font-weight: 600; 
 }
 
 /* Boutons d'action */
 .action-btn {
-    background: #ff4d4d; /* Rouge pour les actions critiques */
-    color: white; /* Texte blanc */
-    border: none; /* Supprime la bordure */
-    padding: 7px 12px; /* Espacement interne */
-    cursor: pointer; /* Change le curseur */
-    border-radius: 5px; /* Coins arrondis */
-    transition: background 0.3s; /* Animation fluide */
+    background: #ff4d4d; 
+    color: white; 
+    border: none; 
+    padding: 7px 12px; 
+    cursor: pointer; 
+    border-radius: 5px; 
+    transition: background 0.3s; 
 }
 
 .action-btn:hover {
-    background: #cc0000; /* Assombrit au survol */
+    background: #cc0000; 
 }
 .user-info {
     display: flex;

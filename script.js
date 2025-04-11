@@ -56,7 +56,7 @@ function setupUserInterface() {
             justify-content: flex-end;
             align-items: center;
             padding: 10px 20px;
-            background-color: #f0f0f0;
+            background-color:rgb(8, 8, 8);
             border-bottom: 1px solid #ddd;
         }
         
